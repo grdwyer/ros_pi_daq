@@ -1,6 +1,6 @@
 from setuptools import setup
 
-package_name = 'ros_pi_daq'
+package_name = 'daq_server'
 
 setup(
     name=package_name,

@@ -4,6 +4,7 @@ FROM ros:foxy
 # Install any needed packages then clean up apt cache
 RUN apt-get update && apt-get install -y \
     ssh \
+    ros-foxy-rqt \
     python3-pip \
     vim \
  && rm -rf /var/lib/apt/lists/*

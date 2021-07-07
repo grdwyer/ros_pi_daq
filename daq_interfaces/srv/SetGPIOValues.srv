@@ -1,0 +1,4 @@
+daq_interfaces/GPIOValues gpio
+---
+bool success
+string message
