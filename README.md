@@ -1,18 +1,20 @@
-# ROS 2 docker template
+# ROS Pi DAQ
 
+Package to use the gpios of the raspberry pi through ros
 ## Structure
 The package directory should be the top level directory with the .docker folder one level down.  
 
 ## Docker
 ### Build
 ```bash
-docker build --pull --rm -f ./.docker/Dockerfile  -t <tag> .
+docker build --pull --rm -f ./.docker/Dockerfile  -t gdwyer/ros_pi_daq:latest .
 ```
 ### Run for dev
 ```bash
 docker run -it \
     --user=$(id -u $USER):$(id -g $USER) \
     --group-add sudo \
+    --group-add gpio \
     --env="DISPLAY" \
     --env=QT_X11_NO_MITSHM=1 \
     --workdir="/dev_ws/src" \
@@ -22,7 +24,7 @@ docker run -it \
     --volume="/etc/shadow:/etc/shadow:ro" \
     --volume="/etc/sudoers.d:/etc/sudoers.d:ro" \
     --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
-    <tag>
+    gdwyer/ros_pi_daq:latest
 ```
 
 ### Run for use
@@ -35,6 +37,6 @@ docker run -it \
     --volume="/etc/shadow:/etc/shadow:ro" \
     --volume="/etc/sudoers.d:/etc/sudoers.d:ro" \
     --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
-    <tag>
+    gdwyer/ros_pi_daq:latest
 ```
 Full docker info [here](https://github.com/grdwyer/Robot-Assisted-Manufacturing/wiki/Docker)
