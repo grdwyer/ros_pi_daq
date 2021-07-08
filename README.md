@@ -1,8 +1,14 @@
 # ROS Pi DAQ
 
 Package to use the gpios of the raspberry pi through ros
-## Structure
-The package directory should be the top level directory with the .docker folder one level down.  
+
+To run this create a config file with the desired pins using the [gpio number](https://pinout.xyz/) using `config/two_of_each.yaml` as a reference.
+Replace the reference to the config file in `launch/daq_launch.launch.py'
+Then launch
+`ros2 launch daq_server daq_server.launch.py`
+
+If it is setup you can run this on another system and use the raspberry pis (remote gpio)[https://gpiozero.readthedocs.io/en/stable/remote_gpio.html]
+capability. Just set the environment variable `export PIGPIO_ADDR='<raspberry pi ip address>'` before launching.
 
 ## Docker
 ### Build
