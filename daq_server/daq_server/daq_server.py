@@ -40,7 +40,7 @@ class DAQServer(Node):
         for pin in output_pins:
             # Check pin number is not already assigned
             if pin not in self.assigned_pins:
-                self.get_logger().info("Setting up pin {} as an input".format(pin))
+                self.get_logger().info("Setting up pin {} as an output".format(pin))
                 self.output_pins[pin] = LED(pin)
                 self.assigned_pins.append(pin)
             else:
