@@ -1,3 +1,5 @@
+import time
+
 import rclpy
 from rclpy.node import Node
 from gpiozero import LED, Button
@@ -24,6 +26,17 @@ class DAQServer(Node):
         self.timer_publish_input = None
         self.get_logger().info("Configuring GPIO pins")
         self.configure_pins()
+
+    def destroy_node(self) -> bool:
+        super().destroy_node()
+        for pin in self.output_pins:
+            if self.output_pins[pin].is_lit:
+                self.output_pins[pin].off()
+                # time.sleep(0.1)
+            # self.output_pins[pin].close()
+
+        for pin in self.input_pins:
+            self.input_pins[pin].close()
 
     def configure_pins(self):
         # Use params to configure the pins wanted and if they should be inputs or outputs (button or LED)
@@ -103,13 +116,15 @@ class DAQServer(Node):
                     # Request to remove pin received
                     # Find the pin in input or output
                     if pin in self.input_pins:
+                        self.input_pins[pin].close()
                         self.input_pins.pop(pin)
                         self.assigned_pins.remove(pin)
                         msg = "Pin {} removed from input pins \n".format(pin)
                         response.message += msg
                         self.get_logger().info(msg)
                     elif pin in self.output_pins:
-                        self.output_pins[pin].off()
+                        if self.output_pins[pin].is_lit: self.output_pins[pin].off()
+                        self.output_pins[pin].close()
                         self.output_pins.pop(pin)
                         self.assigned_pins.remove(pin)
                         msg = "Pin {} removed from output pins".format(pin)
@@ -172,17 +187,18 @@ class DAQServer(Node):
 
 
 def main(args=None):
-    rclpy.init(args=args)
+    try:
+        rclpy.init(args=args)
 
-    server = DAQServer()
-
-    rclpy.spin(server)
+        server = DAQServer()
+        rclpy.spin(server)
 
     # Destroy the node explicitly
     # (optional - otherwise it will be done automatically
     # when the garbage collector destroys the node object)
-    server.destroy_node()
-    rclpy.shutdown()
+    finally:
+        server.destroy_node()
+        rclpy.shutdown()
 
 
 if __name__ == "__main__":
