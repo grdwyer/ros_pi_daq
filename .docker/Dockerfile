@@ -26,4 +26,4 @@ RUN cp /dev_ws/src/ros_pi_daq/.docker/entrypoint.sh /
 RUN chmod 777 /entrypoint.sh
 ENTRYPOINT [ "/entrypoint.sh" ]
 
-CMD ["bash"]
+CMD ["ros2 run daq_server daq_server"]
