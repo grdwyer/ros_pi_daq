@@ -23,6 +23,7 @@ find_package(rosidl_default_generators REQUIRED)
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/GPIOValues.msg"
   "srv/SetGPIOValues.srv"
+  "srv/ModifyGPIOSetup.srv"
  )
 
 if(BUILD_TESTING)

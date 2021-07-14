@@ -1,0 +1,10 @@
+int32 OUTPUT=1
+int32 INPUT=2
+int32 REMOVE=3
+
+int32[] pin_numbers
+int32[] operations
+
+---
+bool success
+string message
